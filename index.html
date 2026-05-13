@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Health Systems Initiative</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #132040;
+    --teal: #0f9478;
+    --teal-light: #12b090;
+    --teal-pale: #e0f5f0;
+    --cream: #faf8f4;
+    --cream-dark: #f0ede6;
+    --text-primary: #0a1628;
+    --text-secondary: #4a5568;
+    --text-muted: #8a94a6;
+    --border: #dde2ea;
+    --white: #ffffff;
+    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    color: var(--text-primary);
+    background: var(--cream);
+    line-height: 1.6;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(250, 248, 244, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 68px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px; cursor: pointer;
+    text-decoration: none; color: inherit;
+  }
+  .nav-logo-mark {
+    width: 36px; height: 36px;
+    background: var(--navy);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .nav-logo-mark svg { width: 20px; height: 20px; }
+  .nav-logo-text {
+    font-family: var(--font-display);
+    font-size: 18px;
+    color: var(--navy);
+    line-height: 1.2;
+  }
+  .nav-logo-sub {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-family: var(--font-body);
+    font-weight: 500;
+  }
+  .nav-links {
+    display: flex; align-items: center; gap: 2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: color 0.2s;
+    cursor: pointer;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--teal); }
+  .nav-cta {
+    background: var(--navy) !important;
+    color: var(--white) !important;
+    padding: 9px 20px;
+    border-radius: 6px;
+    font-size: 13px !important;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--teal) !important; }
+
+  /* ─── PAGES ─── */
+  .page { display: none; padding-top: 68px; min-height: 100vh; }
+  .page.active { display: block; }
+
+  /* ─── HOME ─── */
+  .hero {
+    background: var(--navy);
+    padding: 100px 2rem 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(15,148,120,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: -80px; left: 10%;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(15,148,120,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-inner {
+    max-width: 900px; margin: 0 auto;
+    position: relative; z-index: 1;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(15,148,120,0.15);
+    border: 1px solid rgba(15,148,120,0.3);
+    color: var(--teal-light);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--teal-light);
+    border-radius: 50%;
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    color: var(--white);
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+    max-width: 720px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--teal-light);
+  }
+  .hero p {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.65);
+    max-width: 560px;
+    margin-bottom: 2.5rem;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+  .hero-actions {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: var(--teal);
+    color: var(--white);
+    border: none;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    font-family: var(--font-body);
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--teal-light); transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent;
+    color: rgba(255,255,255,0.75);
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: var(--font-body);
+  }
+  .btn-outline:hover {
+    border-color: rgba(255,255,255,0.5);
+    color: var(--white);
+    transform: translateY(-1px);
+  }
+  .hero-stats {
+    display: flex; gap: 3rem; margin-top: 4rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    flex-wrap: wrap;
+  }
+  .hero-stat-num {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    color: var(--white);
+    display: block;
+  }
+  .hero-stat-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+  }
+
+  /* Focus Areas */
+  .section { padding: 80px 2rem; }
+  .section-inner { max-width: 1080px; margin: 0 auto; }
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    color: var(--navy);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .section-sub {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    max-width: 540px;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+    font-weight: 300;
+  }
+  .focus-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+  .focus-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 2rem;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .focus-card:hover {
+    box-shadow: 0 8px 32px rgba(10,22,40,0.08);
+    transform: translateY(-3px);
+  }
+  .focus-icon {
+    width: 48px; height: 48px;
+    background: var(--teal-pale);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.25rem;
+  }
+  .focus-icon svg { width: 22px; height: 22px; stroke: var(--teal); }
+  .focus-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    color: var(--navy);
+    margin-bottom: 0.6rem;
+  }
+  .focus-card p { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.65; }
+
+  /* ─── ABOUT ─── */
+  .about-hero {
+    background: var(--navy);
+    padding: 60px 2rem 56px;
+  }
+  .about-hero-inner { max-width: 800px; margin: 0 auto; }
+  .about-hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    color: var(--white);
+    margin-bottom: 1rem;
+  }
+  .about-hero p {
+    color: rgba(255,255,255,0.6);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+  .about-content { padding: 60px 2rem; }
+  .about-inner { max-width: 800px; margin: 0 auto; }
+  .about-block { margin-bottom: 3rem; }
+  .about-block h2 {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    color: var(--navy);
+    margin-bottom: 1rem;
+  }
+  .about-block p {
+    color: var(--text-secondary);
+    line-height: 1.8;
+    font-size: 0.95rem;
+    font-weight: 300;
+    margin-bottom: 1rem;
+  }
+  .values-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem; margin-top: 1.5rem;
+  }
+  .value-item {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    border-left: 3px solid var(--teal);
+  }
+  .value-item h4 { font-size: 0.9rem; font-weight: 600; color: var(--navy); margin-bottom: 0.35rem; }
+  .value-item p { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.55; }
+
+  /* ─── PROJECTS ─── */
+  .projects-hero {
+    background: var(--navy);
+    padding: 60px 2rem 56px;
+  }
+  .projects-hero-inner { max-width: 1080px; margin: 0 auto; }
+  .projects-hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    color: var(--white);
+    margin-bottom: 1rem;
+  }
+  .projects-hero p {
+    color: rgba(255,255,255,0.6);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    max-width: 560px;
+    font-weight: 300;
+  }
+  .projects-section { padding: 60px 2rem; }
+  .projects-inner { max-width: 1080px; margin: 0 auto; }
+  .projects-grid { display: grid; gap: 2rem; }
+
+  .project-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .project-card:hover {
+    box-shadow: 0 10px 40px rgba(10,22,40,0.1);
+    transform: translateY(-4px);
+  }
+  .project-card-header {
+    background: var(--navy);
+    padding: 2rem 2rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-card-header::after {
+    content: '';
+    position: absolute; bottom: -40px; right: -20px;
+    width: 140px; height: 140px;
+    background: radial-gradient(circle, rgba(15,148,120,0.2) 0%, transparent 70%);
+  }
+  .project-tag {
+    display: inline-block;
+    background: rgba(15,148,120,0.15);
+    border: 1px solid rgba(15,148,120,0.3);
+    color: var(--teal-light);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+  }
+  .project-card-header h2 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+    position: relative; z-index: 1;
+  }
+  .project-card-header p {
+    color: rgba(255,255,255,0.55);
+    font-size: 0.875rem;
+    line-height: 1.65;
+    position: relative; z-index: 1;
+  }
+  .project-card-body { padding: 2rem; }
+  .project-meta {
+    display: flex; flex-wrap: wrap; gap: 1.5rem;
+    margin-bottom: 1.75rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .project-meta-item {}
+  .project-meta-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+  .project-meta-value {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--navy);
+  }
+  .project-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+  }
+  .project-features {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.75rem; margin-bottom: 2rem;
+  }
+  .project-feature {
+    display: flex; align-items: flex-start; gap: 8px;
+    font-size: 0.83rem; color: var(--text-secondary);
+  }
+  .project-feature::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--teal);
+    border-radius: 50%;
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+  .tech-stack {
+    display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem;
+  }
+  .tech-pill {
+    background: var(--cream-dark);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+  .project-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-demo {
+    background: var(--navy);
+    color: var(--white);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: var(--font-body);
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-demo:hover { background: var(--teal); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: var(--font-body);
+  }
+  .btn-ghost:hover { border-color: var(--teal); color: var(--teal); }
+
+  /* ─── CONTACT ─── */
+  .contact-hero {
+    background: var(--navy);
+    padding: 60px 2rem 56px;
+  }
+  .contact-hero-inner { max-width: 800px; margin: 0 auto; }
+  .contact-hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    color: var(--white);
+    margin-bottom: 1rem;
+  }
+  .contact-hero p {
+    color: rgba(255,255,255,0.6);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+  .contact-section { padding: 60px 2rem; }
+  .contact-inner {
+    max-width: 800px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;
+  }
+  @media (max-width: 620px) {
+    .contact-inner { grid-template-columns: 1fr; }
+  }
+  .contact-form {}
+  .form-group { margin-bottom: 1.25rem; }
+  .form-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--navy);
+    margin-bottom: 0.5rem;
+  }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 11px 14px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--text-primary);
+    background: var(--white);
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+    border-color: var(--teal);
+  }
+  .form-group textarea { min-height: 120px; resize: vertical; }
+  .btn-submit {
+    width: 100%;
+    background: var(--navy);
+    color: var(--white);
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 0.5rem;
+  }
+  .btn-submit:hover { background: var(--teal); }
+  .contact-info {}
+  .contact-info h3 {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    color: var(--navy);
+    margin-bottom: 1rem;
+  }
+  .contact-info p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    margin-bottom: 2rem;
+    font-weight: 300;
+  }
+  .contact-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    margin-bottom: 1.25rem;
+  }
+  .contact-item-icon {
+    width: 36px; height: 36px; flex-shrink: 0;
+    background: var(--teal-pale);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .contact-item-icon svg { width: 16px; height: 16px; stroke: var(--teal); }
+  .contact-item-text {}
+  .contact-item-text span {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 2px;
+  }
+  .contact-item-text a, .contact-item-text p {
+    font-size: 0.875rem;
+    color: var(--navy);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .contact-item-text a:hover { color: var(--teal); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--navy);
+    padding: 3rem 2rem 2rem;
+    color: rgba(255,255,255,0.5);
+  }
+  .footer-inner {
+    max-width: 1080px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 1.5rem; flex-wrap: wrap;
+  }
+  .footer-logo {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: rgba(255,255,255,0.8);
+  }
+  .footer-links {
+    display: flex; gap: 2rem; list-style: none;
+  }
+  .footer-links a {
+    color: rgba(255,255,255,0.45);
+    text-decoration: none;
+    font-size: 13px;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--teal-light); }
+  .footer-copy {
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    width: 100%;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    text-align: center;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hero-stats { gap: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" onclick="showPage('home')">
+    <div class="nav-logo-mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+      </svg>
+    </div>
+    <div>
+      <div class="nav-logo-text">Health Systems Initiative</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
+    <li><a onclick="showPage('about')" id="nav-about">About</a></li>
+    <li><a onclick="showPage('projects')" id="nav-projects">Projects</a></li>
+    <li><a onclick="showPage('contact')" id="nav-contact" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ─── HOME PAGE ─── -->
+<div id="page-home" class="page active">
+
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge">Improving healthcare outcomes</div>
+      <h1>Strengthening <em>health systems</em> through innovation &amp; research</h1>
+      <p>We partner with hospitals, clinics, and healthcare networks to design, prototype, and deploy systems that improve patient outcomes and operational efficiency.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="showPage('projects')">View our projects</button>
+        <button class="btn-outline" onclick="showPage('about')">Learn more</button>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <span class="hero-stat-num">12+</span>
+          <span class="hero-stat-label">Active projects</span>
+        </div>
+        <div>
+          <span class="hero-stat-num">7</span>
+          <span class="hero-stat-label">Partner hospitals</span>
+        </div>
+        <div>
+          <span class="hero-stat-num">4</span>
+          <span class="hero-stat-label">Countries</span>
+        </div>
+        <div>
+          <span class="hero-stat-num">~40k</span>
+          <span class="hero-stat-label">Patients reached</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="background: var(--white);">
+    <div class="section-inner">
+      <div class="section-label">What we do</div>
+      <h2 class="section-title">Our focus areas</h2>
+      <p class="section-sub">From neonatal care coordination to data-driven policy, we tackle the most pressing challenges in health system design.</p>
+      <div class="focus-grid">
+        <div class="focus-card">
+          <div class="focus-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <h3>Care coordination</h3>
+          <p>Designing referral networks and patient transfer systems that reduce delays and ensure continuity of care across hospital tiers.</p>
+        </div>
+        <div class="focus-card">
+          <div class="focus-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+          </div>
+          <h3>Health informatics</h3>
+          <p>Building digital tools and dashboards that give clinicians and administrators real-time visibility into patient flows and resource utilisation.</p>
+        </div>
+        <div class="focus-card">
+          <div class="focus-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </div>
+          <h3>Policy &amp; advocacy</h3>
+          <p>Translating evidence from the field into actionable policy recommendations for ministries of health and international health bodies.</p>
+        </div>
+        <div class="focus-card">
+          <div class="focus-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+              <line x1="8" y1="21" x2="16" y2="21"/>
+              <line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+          </div>
+          <h3>Digital health tools</h3>
+          <p>Prototyping web and mobile applications that support healthcare workers with clinical decision support, triage, and patient tracking.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-inner">
+      <div class="section-label">Latest work</div>
+      <h2 class="section-title">Featured project</h2>
+      <p class="section-sub">Our most recent initiative applies intelligent referral routing to improve NICU outcomes across hospital networks.</p>
+      <div class="project-card" style="max-width: 720px; cursor: pointer;" onclick="showPage('projects')">
+        <div class="project-card-header">
+          <div class="project-tag">Neonatal care</div>
+          <h2>NICU Network Referral System</h2>
+          <p>An intelligent healthcare referral and patient transfer platform for neonatal intensive care networks — connecting facilities, tracking capacity, and routing patients to the right care.</p>
+        </div>
+        <div class="project-card-body">
+          <p class="project-desc">A fully functional UI demo showcasing real-time bed availability, inter-hospital transfer coordination, and clinical handover tools for NICU networks.</p>
+          <div class="tech-stack">
+            <span class="tech-pill">React</span>
+            <span class="tech-pill">Healthcare UX</span>
+            <span class="tech-pill">Referral logic</span>
+            <span class="tech-pill">Capacity tracking</span>
+          </div>
+          <span style="font-size:13px; color: var(--teal); font-weight:600;">View project →</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ─── ABOUT PAGE ─── -->
+<div id="page-about" class="page">
+  <div class="about-hero">
+    <div class="about-hero-inner">
+      <p style="font-size:11px; letter-spacing:.1em; text-transform:uppercase; color: var(--teal-light); font-weight:600; margin-bottom:.75rem;">About us</p>
+      <h1>A mission-driven initiative at the intersection of healthcare and innovation</h1>
+      <p style="margin-top:1rem;">We exist to make health systems more effective, equitable, and resilient — from the bedside to the boardroom.</p>
+    </div>
+  </div>
+  <div class="about-content">
+    <div class="about-inner">
+      <div class="about-block">
+        <h2>Who we are</h2>
+        <p>Health Systems Initiative is an independent research and innovation organisation focused on improving how healthcare is delivered at a systems level. We work across sub-Saharan Africa, South Asia, and the United Kingdom, partnering with hospitals, governments, and NGOs.</p>
+        <p>Our team brings together clinicians, software engineers, health economists, and policy experts to develop practical solutions that can be implemented at scale — not just in well-resourced settings, but where they are needed most.</p>
+      </div>
+      <div class="about-block">
+        <h2>Our approach</h2>
+        <p>We believe lasting change in healthcare requires both technical rigour and deep contextual understanding. Every project begins with fieldwork: talking to frontline workers, mapping existing processes, and identifying the precise points of failure.</p>
+        <p>From there, we prototype rapidly, test iteratively, and document everything so our insights can be replicated and scaled by others. We publish open-access reports and, where possible, open-source our software tools.</p>
+      </div>
+      <div class="about-block">
+        <h2>Our values</h2>
+        <div class="values-grid">
+          <div class="value-item">
+            <h4>Equity first</h4>
+            <p>Every solution must be accessible to those with fewest resources, not only those with the most.</p>
+          </div>
+          <div class="value-item">
+            <h4>Evidence-based</h4>
+            <p>We build on what the data shows, not what is fashionable or easy.</p>
+          </div>
+          <div class="value-item">
+            <h4>Open by default</h4>
+            <p>We publish our methods, share our tools, and credit our partners.</p>
+          </div>
+          <div class="value-item">
+            <h4>Long-term thinking</h4>
+            <p>We optimise for systems change over years, not quick wins over months.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── PROJECTS PAGE ─── -->
+<div id="page-projects" class="page">
+  <div class="projects-hero">
+    <div class="projects-hero-inner">
+      <p style="font-size:11px; letter-spacing:.1em; text-transform:uppercase; color: var(--teal-light); font-weight:600; margin-bottom:.75rem;">Our work</p>
+      <h1>Projects &amp; initiatives</h1>
+      <p>From prototype to deployment — a portfolio of tools, systems, and research addressing real healthcare challenges.</p>
+    </div>
+  </div>
+  <div class="projects-section">
+    <div class="projects-inner">
+      <div class="projects-grid">
+
+        <!-- NICU NETWORK — FEATURED -->
+        <div class="project-card">
+          <div class="project-card-header">
+            <div class="project-tag">Featured · Neonatal care</div>
+            <h2>NICU Network — Healthcare Referral System</h2>
+            <p>An intelligent referral and patient transfer platform for neonatal intensive care networks, designed to reduce transfer delays and improve clinical handover quality.</p>
+          </div>
+          <div class="project-card-body">
+            <div class="project-meta">
+              <div class="project-meta-item">
+                <div class="project-meta-label">Status</div>
+                <div class="project-meta-value" style="color: var(--teal);">● Live demo</div>
+              </div>
+              <div class="project-meta-item">
+                <div class="project-meta-label">Domain</div>
+                <div class="project-meta-value">Neonatal / Critical care</div>
+              </div>
+              <div class="project-meta-item">
+                <div class="project-meta-label">Type</div>
+                <div class="project-meta-value">Web application UI</div>
+              </div>
+            </div>
+            <p class="project-desc">This interactive demo showcases a NICU referral coordination platform. Hospitals can view real-time bed capacity across a network, initiate and track patient transfers, assign receiving clinicians, and complete structured clinical handovers — all within a single interface. The system is designed to reduce the time between referral decision and patient admission, a critical window in neonatal emergencies.</p>
+            <div class="project-features">
+              <div class="project-feature">Real-time bed availability dashboard across network hospitals</div>
+              <div class="project-feature">Structured referral request and acceptance workflow</div>
+              <div class="project-feature">Clinical handover documentation with checklist</div>
+              <div class="project-feature">Transfer tracking with estimated arrival time</div>
+              <div class="project-feature">Escalation alerts for high-acuity patients</div>
+              <div class="project-feature">Audit trail for each referral episode</div>
+            </div>
+            <div class="tech-stack">
+              <span class="tech-pill">React</span>
+              <span class="tech-pill">Healthcare UX</span>
+              <span class="tech-pill">Referral workflows</span>
+              <span class="tech-pill">Capacity management</span>
+              <span class="tech-pill">Clinical handover</span>
+            </div>
+            <div class="project-actions">
+              <a href="https://claude.ai/public/artifacts/6282274a-dfd6-4572-aecd-3d3e5e9c8d7b" target="_blank" class="btn-demo">Open live demo →</a>
+              <button class="btn-ghost" onclick="showPage('contact')">Get in touch</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PLACEHOLDER 2 -->
+        <div class="project-card" style="opacity: 0.65;">
+          <div class="project-card-header" style="background: #1c2e4a;">
+            <div class="project-tag" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12); color: rgba(255,255,255,0.4);">In development · Community health</div>
+            <h2>Community Health Worker Tracker</h2>
+            <p>A lightweight mobile tool enabling supervisors to track CHW activity, patient follow-up, and supply usage across dispersed rural catchment areas.</p>
+          </div>
+          <div class="project-card-body">
+            <div class="project-meta">
+              <div class="project-meta-item">
+                <div class="project-meta-label">Status</div>
+                <div class="project-meta-value" style="color: #8a94a6;">◌ In development</div>
+              </div>
+              <div class="project-meta-item">
+                <div class="project-meta-label">Domain</div>
+                <div class="project-meta-value">Primary / Community care</div>
+              </div>
+            </div>
+            <p class="project-desc">Coming soon. This project is currently in the research and prototyping phase. Check back for updates or contact us to learn more.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── CONTACT PAGE ─── -->
+<div id="page-contact" class="page">
+  <div class="contact-hero">
+    <div class="contact-hero-inner">
+      <p style="font-size:11px; letter-spacing:.1em; text-transform:uppercase; color: var(--teal-light); font-weight:600; margin-bottom:.75rem;">Get in touch</p>
+      <h1>Let's work together</h1>
+      <p>Whether you are a hospital network, a funder, or a researcher — we would love to hear from you.</p>
+    </div>
+  </div>
+  <div class="contact-section">
+    <div class="contact-inner">
+      <div class="contact-form">
+        <div class="form-group">
+          <label>Full name</label>
+          <input type="text" placeholder="Dr. Jane Okonkwo">
+        </div>
+        <div class="form-group">
+          <label>Email address</label>
+          <input type="email" placeholder="jane@hospital.org">
+        </div>
+        <div class="form-group">
+          <label>Organisation</label>
+          <input type="text" placeholder="Lagos University Teaching Hospital">
+        </div>
+        <div class="form-group">
+          <label>Subject</label>
+          <select>
+            <option>Partnership enquiry</option>
+            <option>Project collaboration</option>
+            <option>Funding &amp; grants</option>
+            <option>Research interest</option>
+            <option>General enquiry</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Tell us a bit about your project or organisation..."></textarea>
+        </div>
+        <button class="btn-submit">Send message</button>
+      </div>
+      <div class="contact-info">
+        <h3>Direct contact</h3>
+        <p>We aim to respond to all enquiries within two working days. For urgent matters, please indicate that in your message.</p>
+        <div class="contact-item">
+          <div class="contact-item-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+          </div>
+          <div class="contact-item-text">
+            <span>Email</span>
+            <a href="mailto:info@healthsystemsinitiative.com">info@healthsystemsinitiative.com</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </div>
+          <div class="contact-item-text">
+            <span>Website</span>
+            <p>healthsystemsinitiative.com</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+          </div>
+          <div class="contact-item-text">
+            <span>Base</span>
+            <p>United Kingdom · Global partnerships</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Health Systems Initiative</div>
+    <ul class="footer-links">
+      <li><a onclick="showPage('home')">Home</a></li>
+      <li><a onclick="showPage('about')">About</a></li>
+      <li><a onclick="showPage('projects')">Projects</a></li>
+      <li><a onclick="showPage('contact')">Contact</a></li>
+    </ul>
+  </div>
+  <div class="footer-inner">
+    <p class="footer-copy">© 2025 Health Systems Initiative. All rights reserved. · healthsystemsinitiative.com</p>
+  </div>
+</footer>
+
+<script>
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  const navEl = document.getElementById('nav-' + id);
+  if (navEl) navEl.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
