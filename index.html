@@ -11,18 +11,18 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 :root{
-  --teal:#1b7a6f;
-  --teal-hover:#155f56;
-  --teal-pale:#edf7f5;
-  --teal-mid:#2a9d8f;
-  --teal-dark:#0e4d45;
-  --text:#1a1a1a;
-  --text2:#555;
-  --text3:#888;
-  --border:#ddd;
+  --teal:#2ec4a0;
+  --teal-hover:#25a888;
+  --teal-pale:#e8faf5;
+  --teal-mid:#3dd4b0;
+  --teal-dark:#1a2744;
+  --text:#1a2744;
+  --text2:#4a5568;
+  --text3:#8a96a8;
+  --border:#dde3ec;
   --bg:#fff;
-  --bg2:#f9f7f4;
-  --bg3:#f2f0ec;
+  --bg2:#f5f7fb;
+  --bg3:#edf0f7;
   --nav-h:72px;
   --serif:'Lora',Georgia,serif;
   --sans:'Source Sans 3',system-ui,sans-serif;
@@ -39,8 +39,9 @@ nav{
   padding:0 48px;justify-content:space-between;
 }
 .logo{display:flex;align-items:center;gap:12px;cursor:pointer}
-.logo-mark{width:36px;height:36px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center}
-.logo-mark svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.logo-mark{width:36px;height:36px;border-radius:6px;background:var(--teal-dark);display:flex;align-items:center;justify-content:center;position:relative}
+.logo-mark::after{content:'';position:absolute;bottom:-4px;right:-4px;width:14px;height:14px;border-radius:3px;background:var(--teal)}
+.logo-mark svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;position:relative;z-index:1}
 .logo-name{font-family:var(--serif);font-size:16px;font-weight:600;color:var(--text);line-height:1.2}
 .logo-name span{display:block;font-size:10px;font-weight:400;font-family:var(--sans);color:var(--text3);letter-spacing:.06em;text-transform:uppercase}
 .nav-links{display:flex;align-items:center;gap:32px;list-style:none}
@@ -77,7 +78,7 @@ nav{
 .hero-left{}
 .hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:22px}
 .hero-left h1{font-family:var(--serif);font-size:clamp(2.2rem,4vw,3.4rem);font-weight:700;line-height:1.2;color:#fff;margin-bottom:24px}
-.hero-left h1 em{font-style:italic;color:#7dd8ce}
+.hero-left h1 em{font-style:italic;color:#2ec4a0}
 .hero-left p{font-size:1.05rem;font-weight:300;color:rgba(255,255,255,.7);line-height:1.85;margin-bottom:36px;max-width:440px}
 .hero-actions{display:flex;gap:14px;flex-wrap:wrap}
 .btn-white{background:#fff;color:var(--teal-dark);border:none;padding:14px 30px;border-radius:4px;font-size:15px;font-weight:600;cursor:pointer;transition:background .2s;display:inline-block}
@@ -147,7 +148,7 @@ nav{
 .feat-meta-row:first-child{border-top:none;padding-top:0}
 .feat-meta-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:4px}
 .feat-meta-val{font-size:.9rem;color:rgba(255,255,255,.8);font-weight:500}
-.feat-meta-val.live{color:#7dd8ce}
+.feat-meta-val.live{color:#2ec4a0}
 
 .featured-card-body{padding:40px 48px;display:grid;grid-template-columns:1fr 1fr;gap:48px}
 .feat-desc p{font-size:.95rem;color:var(--text2);line-height:1.85;font-weight:300;margin-bottom:16px}
@@ -172,7 +173,7 @@ nav{
 .page-banner-inner{max-width:1100px;margin:0 auto}
 .page-banner .label{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:14px}
 .page-banner h1{font-family:var(--serif);font-size:clamp(2rem,3.8vw,3.2rem);font-weight:700;color:#fff;line-height:1.2;max-width:720px}
-.page-banner h1 em{font-style:italic;color:#7dd8ce}
+.page-banner h1 em{font-style:italic;color:#2ec4a0}
 .page-banner p{font-size:1rem;color:rgba(255,255,255,.65);font-weight:300;line-height:1.8;max-width:560px;margin-top:18px}
 
 .about-body{padding:80px 48px;max-width:1100px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr;gap:80px;align-items:start}
@@ -202,7 +203,7 @@ nav{
 .project-item-header{background:var(--teal-dark);padding:36px 44px;display:flex;align-items:flex-start;justify-content:space-between;gap:32px;flex-wrap:wrap}
 .project-item-header-left{}
 .proj-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.85);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 14px;border-radius:3px;margin-bottom:14px}
-.proj-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:#7dd8ce;flex-shrink:0}
+.proj-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:#2ec4a0;flex-shrink:0}
 .project-item-header h2{font-family:var(--serif);font-size:clamp(1.4rem,2.3vw,1.9rem);font-weight:700;color:#fff;line-height:1.2;max-width:520px}
 .project-item-header p{font-size:.9rem;color:rgba(255,255,255,.6);margin-top:10px;line-height:1.7;max-width:520px}
 .project-meta-pills{display:flex;gap:10px;flex-wrap:wrap}
@@ -250,8 +251,9 @@ nav{
 footer{background:#0f2137;padding:60px 48px 40px}
 .footer-top{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:60px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:32px}
 .footer-brand-logo{display:flex;align-items:center;gap:12px;margin-bottom:16px;cursor:pointer}
-.footer-logo-mark{width:32px;height:32px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center}
-.footer-logo-mark svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.footer-logo-mark{width:32px;height:32px;border-radius:5px;background:var(--teal-dark);display:flex;align-items:center;justify-content:center;position:relative}
+.footer-logo-mark::after{content:'';position:absolute;bottom:-3px;right:-3px;width:12px;height:12px;border-radius:2px;background:var(--teal)}
+.footer-logo-mark svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;position:relative;z-index:1}
 .footer-logo-name{font-family:var(--serif);font-size:15px;font-weight:600;color:#fff}
 .footer-brand p{font-size:.875rem;color:rgba(255,255,255,.45);line-height:1.75;max-width:260px}
 .footer-col-title{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:18px}
