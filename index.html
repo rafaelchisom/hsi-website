@@ -574,55 +574,81 @@ footer{background:#0f2137;padding:60px 48px 40px}
     <div class="page-banner-inner">
       <div class="label">Our work</div>
       <h1>Projects &amp; initiatives</h1>
-      <p>We currently have one active project. We share what we've actually built — not a wishlist.</p>
+      <p>Select a location on the map to explore our active projects.</p>
     </div>
   </div>
 
-  <div class="projects-body">
-    <div class="projects-intro">
-      <h2>We currently have one active project.</h2>
-      <p>We are an early-stage organisation. Rather than listing aspirational work, we share what we have actually built. More projects are in early research phases and will appear here as they develop.</p>
-    </div>
-
-    <div class="project-item">
-      <div class="project-item-header">
-        <div class="project-item-header-left">
-          <div class="proj-badge">Live demo available</div>
-          <h2>NICU Network — Healthcare Referral System</h2>
-          <p>A web-based coordination platform for neonatal intensive care networks — reducing the time between referral decision and patient admission.</p>
-        </div>
-        <div class="project-meta-pills">
-          <span class="meta-pill">Neonatal care</span>
-          <span class="meta-pill">Web application</span>
-          <span class="meta-pill">2025</span>
-        </div>
+  <!-- MAP SECTION -->
+  <div style="background:#1a2744;position:relative;">
+    <div style="padding:24px 48px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;max-width:1400px;margin:0 auto;">
+      <div style="font-size:13px;color:rgba(255,255,255,.5);">
+        <span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#2ec4a0;margin-right:7px;vertical-align:middle;"></span>Active project &nbsp;&nbsp;
+        <span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.2);margin-right:7px;vertical-align:middle;"></span>In research
       </div>
-      <div class="project-item-body">
-        <div class="project-desc-col">
-          <p>When a premature baby needs transferring between NICUs, the referral and coordination process is often manual, slow, and error-prone. Our platform gives clinical teams across multiple hospitals a shared, real-time view of bed availability, patient status, and transfer logistics.</p>
-          <p>The goal is simple: reduce the time between the decision to transfer and the patient's arrival at the receiving unit — one of the most critical windows in neonatal emergency care.</p>
-          <ul class="feature-list">
-            <li>Real-time bed availability across all network hospitals</li>
-            <li>Structured referral request &amp; acceptance workflow</li>
-            <li>Clinical handover documentation with checklist</li>
-            <li>Transfer tracking and escalation alerts</li>
-            <li>Full audit trail for every referral episode</li>
+      <div style="font-size:12px;color:rgba(255,255,255,.3);">Click Nigeria to view project details</div>
+    </div>
+    <div id="map-container" style="width:100%;cursor:default;"></div>
+  </div>
+
+  <!-- PROJECT DETAIL PANEL -->
+  <div id="project-detail" style="display:none;background:#fff;border-top:3px solid #2ec4a0;">
+    <div style="max-width:1100px;margin:0 auto;padding:52px 48px;">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:32px;flex-wrap:wrap;margin-bottom:40px;">
+        <div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;">
+            <span style="display:inline-flex;align-items:center;gap:7px;background:#e8faf5;border:1px solid #b0e8d8;color:#1a9478;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 14px;border-radius:3px;">
+              <span style="width:6px;height:6px;border-radius:50%;background:#2ec4a0;display:inline-block;"></span>Live demo available
+            </span>
+            <span style="background:#f5f7fb;border:1px solid #dde3ec;color:#8a96a8;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:5px 14px;border-radius:3px;">Nigeria</span>
+            <span style="background:#f5f7fb;border:1px solid #dde3ec;color:#8a96a8;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:5px 14px;border-radius:3px;">Neonatal care</span>
+          </div>
+          <h2 style="font-family:'Lora',Georgia,serif;font-size:clamp(1.5rem,2.5vw,2.2rem);font-weight:700;color:#1a2744;line-height:1.2;margin-bottom:10px;">NICU Network — Healthcare Referral System</h2>
+          <p style="font-size:1rem;color:#4a5568;line-height:1.75;max-width:620px;font-weight:300;">A web-based coordination platform for neonatal intensive care networks — reducing the time between referral decision and patient admission.</p>
+        </div>
+        <button onclick="hideProject()" style="background:none;border:1px solid #dde3ec;color:#8a96a8;padding:8px 16px;border-radius:4px;font-size:13px;cursor:pointer;white-space:nowrap;font-family:'Source Sans 3',sans-serif;flex-shrink:0;">✕ Close</button>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;">
+        <div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#8a96a8;margin-bottom:16px;">About this project</div>
+          <p style="font-size:.95rem;color:#4a5568;line-height:1.85;font-weight:300;margin-bottom:16px;">When a premature baby needs transferring between NICUs, the referral and coordination process is often manual, slow, and error-prone. Our platform gives clinical teams across multiple hospitals a shared, real-time view of bed availability, patient status, and transfer logistics.</p>
+          <p style="font-size:.95rem;color:#4a5568;line-height:1.85;font-weight:300;margin-bottom:24px;">The goal is simple: reduce the time between the decision to transfer and the patient's arrival at the receiving unit — one of the most critical windows in neonatal emergency care.</p>
+          <div style="font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#8a96a8;margin-bottom:14px;">Key features</div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:9px;">
+            <li style="display:flex;gap:10px;font-size:.9rem;color:#4a5568;align-items:flex-start;"><span style="color:#2ec4a0;font-weight:700;flex-shrink:0;">✓</span>Real-time bed availability across all network hospitals</li>
+            <li style="display:flex;gap:10px;font-size:.9rem;color:#4a5568;align-items:flex-start;"><span style="color:#2ec4a0;font-weight:700;flex-shrink:0;">✓</span>Structured referral request &amp; acceptance workflow</li>
+            <li style="display:flex;gap:10px;font-size:.9rem;color:#4a5568;align-items:flex-start;"><span style="color:#2ec4a0;font-weight:700;flex-shrink:0;">✓</span>Clinical handover documentation with checklist</li>
+            <li style="display:flex;gap:10px;font-size:.9rem;color:#4a5568;align-items:flex-start;"><span style="color:#2ec4a0;font-weight:700;flex-shrink:0;">✓</span>Transfer tracking and escalation alerts</li>
+            <li style="display:flex;gap:10px;font-size:.9rem;color:#4a5568;align-items:flex-start;"><span style="color:#2ec4a0;font-weight:700;flex-shrink:0;">✓</span>Full audit trail for every referral episode</li>
           </ul>
         </div>
-        <div class="project-action-col">
-          <div class="note">The demo is fully interactive — explore the complete referral workflow from initial request through to transfer completion.</div>
-          <a href="https://claude.ai/public/artifacts/6282274a-dfd6-4572-aecd-3d3e5e9c8d7b" target="_blank" class="btn-primary" style="text-decoration:none">Open live demo →</a>
-          <button class="btn-outline" onclick="showPage('contact')">Get in touch about this</button>
+        <div style="display:flex;flex-direction:column;gap:24px;">
+          <div style="background:#f5f7fb;border:1px solid #dde3ec;border-radius:8px;padding:28px;">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#8a96a8;margin-bottom:20px;">Project details</div>
+            <div style="display:flex;flex-direction:column;gap:0;">
+              <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #dde3ec;"><span style="font-size:13px;color:#8a96a8;">Location</span><span style="font-size:13px;font-weight:600;color:#1a2744;">Nigeria</span></div>
+              <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #dde3ec;"><span style="font-size:13px;color:#8a96a8;">Status</span><span style="font-size:13px;font-weight:600;color:#2ec4a0;">● Live demo</span></div>
+              <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #dde3ec;"><span style="font-size:13px;color:#8a96a8;">Type</span><span style="font-size:13px;font-weight:600;color:#1a2744;">Web application</span></div>
+              <div style="display:flex;justify-content:space-between;padding:12px 0;"><span style="font-size:13px;color:#8a96a8;">Year</span><span style="font-size:13px;font-weight:600;color:#1a2744;">2025</span></div>
+            </div>
+          </div>
+          <div style="background:#1a2744;border-radius:8px;padding:28px;">
+            <p style="font-size:.9rem;color:rgba(255,255,255,.65);line-height:1.7;margin-bottom:20px;">The demo is fully interactive — explore the complete referral workflow from initial request through to transfer completion.</p>
+            <a href="https://claude.ai/public/artifacts/6282274a-dfd6-4572-aecd-3d3e5e9c8d7b" target="_blank" style="display:block;background:#2ec4a0;color:#fff;text-decoration:none;text-align:center;padding:14px 24px;border-radius:4px;font-size:15px;font-weight:600;margin-bottom:12px;">Open live demo \u2192</a>
+            <button onclick="showPage('contact')" style="width:100%;background:transparent;color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.2);padding:12px 24px;border-radius:4px;font-size:14px;font-weight:500;cursor:pointer;font-family:'Source Sans 3',sans-serif;">Get in touch about this</button>
+          </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="coming-soon-card">
+  <!-- Coming soon -->
+  <div style="max-width:1100px;margin:0 auto;padding:40px 48px 80px;">
+    <div style="border:1.5px dashed #dde3ec;border-radius:8px;padding:32px 40px;background:#f5f7fb;display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap;">
       <div>
-        <h3>Community Health Worker Coordination Tool</h3>
-        <p>A lightweight mobile tool for supervisors to track CHW activity, patient follow-up, and supply usage across rural catchment areas. Currently in early research phase — we're speaking with community health programmes in East Africa and South Asia before designing anything.</p>
+        <h3 style="font-family:'Lora',Georgia,serif;font-size:1.15rem;font-weight:600;color:#1a2744;margin-bottom:8px;">Community Health Worker Coordination Tool</h3>
+        <p style="font-size:.9rem;color:#4a5568;line-height:1.7;max-width:520px;">Currently in early research phase — we're speaking with community health programmes in East Africa and South Asia before designing anything.</p>
       </div>
-      <div class="badge-pill">In research</div>
+      <div style="background:#fff;border:1px solid #dde3ec;color:#8a96a8;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:8px 18px;border-radius:20px;white-space:nowrap;height:fit-content;margin-top:4px;">In research</div>
     </div>
   </div>
 </div>
@@ -714,7 +740,10 @@ footer{background:#0f2137;padding:60px 48px 40px}
   </div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
 <script>
+/* ── page navigation ── */
 function showPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
@@ -722,7 +751,146 @@ function showPage(id){
   const n=document.getElementById('nav-'+id);
   if(n)n.classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
+  if(id!=='projects') hideProject();
+  if(id==='projects' && !window._mapBuilt) buildMap();
 }
+function showProject(){
+  const p=document.getElementById('project-detail');
+  p.style.display='block';
+  setTimeout(()=>p.scrollIntoView({behavior:'smooth',block:'start'}),60);
+}
+function hideProject(){
+  document.getElementById('project-detail').style.display='none';
+}
+
+/* ── D3 world map ── */
+function buildMap(){
+  window._mapBuilt=true;
+  const container=document.getElementById('map-container');
+  const W=container.clientWidth||960;
+  const H=Math.round(W*0.52);
+
+  const svg=d3.select('#map-container').append('svg')
+    .attr('viewBox',`0 0 ${W} ${H}`)
+    .attr('width','100%')
+    .style('display','block');
+
+  /* ocean */
+  svg.append('rect').attr('width',W).attr('height',H).attr('fill','#152038');
+
+  const proj=d3.geoNaturalEarth1()
+    .scale(W/6.3)
+    .translate([W/2, H/2]);
+  const path=d3.geoPath().projection(proj);
+
+  /* Nigeria centre for marker */
+  const nigeriaCentre=[8.6753, 9.0820];
+
+  fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
+    .then(r=>r.json())
+    .then(world=>{
+      const countries=topojson.feature(world, world.objects.countries);
+      /* country id 566 = Nigeria */
+      svg.selectAll('path.country')
+        .data(countries.features)
+        .join('path')
+        .attr('class','country')
+        .attr('d',path)
+        .attr('fill', d=> d.id===566 ? '#2ec4a0' : '#1e3060')
+        .attr('stroke','#2a3f75')
+        .attr('stroke-width',0.4)
+        .style('cursor', d=> d.id===566 ? 'pointer' : 'default')
+        .style('filter', d=> d.id===566 ? 'drop-shadow(0 0 8px rgba(46,196,160,0.55))' : 'none')
+        .on('mouseover', function(event,d){
+          if(d.id===566) d3.select(this).attr('fill','#3dd4b0');
+        })
+        .on('mouseout', function(event,d){
+          if(d.id===566) d3.select(this).attr('fill','#2ec4a0');
+        })
+        .on('click', function(event,d){
+          if(d.id===566) showProject();
+        });
+
+      /* graticule */
+      svg.append('path')
+        .datum(d3.geoGraticule()())
+        .attr('d',path)
+        .attr('fill','none')
+        .attr('stroke','rgba(255,255,255,0.04)')
+        .attr('stroke-width',0.5);
+
+      /* country borders */
+      svg.append('path')
+        .datum(topojson.mesh(world, world.objects.countries, (a,b)=>a!==b))
+        .attr('d',path)
+        .attr('fill','none')
+        .attr('stroke','#2a3f75')
+        .attr('stroke-width',0.4);
+
+      /* Nigeria pulse ring */
+      const [px,py]=proj(nigeriaCentre);
+      const pulse=svg.append('circle')
+        .attr('cx',px).attr('cy',py)
+        .attr('r',8)
+        .attr('fill','none')
+        .attr('stroke','#2ec4a0')
+        .attr('stroke-width',1.5)
+        .attr('opacity',0.7);
+      function animatePulse(){
+        pulse.attr('r',8).attr('opacity',0.7)
+          .transition().duration(1800).ease(d3.easeLinear)
+          .attr('r',22).attr('opacity',0)
+          .on('end', animatePulse);
+      }
+      animatePulse();
+
+      /* Nigeria dot */
+      svg.append('circle')
+        .attr('cx',px).attr('cy',py)
+        .attr('r',6)
+        .attr('fill','#2ec4a0')
+        .attr('stroke','#fff')
+        .attr('stroke-width',1.5)
+        .style('cursor','pointer')
+        .on('click', showProject);
+
+      /* label */
+      const lx=px+14, ly=py-10;
+      svg.append('rect')
+        .attr('x',lx).attr('y',ly-13)
+        .attr('width',138).attr('height',22)
+        .attr('rx',4)
+        .attr('fill','rgba(26,39,68,0.92)')
+        .attr('stroke','#2ec4a0')
+        .attr('stroke-width',1)
+        .style('cursor','pointer')
+        .on('click', showProject);
+      svg.append('text')
+        .attr('x',lx+69).attr('y',ly+3)
+        .attr('text-anchor','middle')
+        .attr('fill','#2ec4a0')
+        .attr('font-size', Math.max(9, W*0.011))
+        .attr('font-family','Source Sans 3, sans-serif')
+        .attr('font-weight','600')
+        .text('Nigeria · NICU Network')
+        .style('cursor','pointer')
+        .on('click', showProject);
+    })
+    .catch(()=>{
+      /* fallback if CDN blocked */
+      svg.append('text')
+        .attr('x',W/2).attr('y',H/2)
+        .attr('text-anchor','middle')
+        .attr('fill','rgba(255,255,255,.4)')
+        .attr('font-size',14)
+        .text('Map requires internet connection');
+    });
+}
+
+/* build map when projects page first shown */
+document.addEventListener('DOMContentLoaded', ()=>{
+  if(document.getElementById('page-projects').classList.contains('active')) buildMap();
+});
 </script>
 </body>
 </html>
