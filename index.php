@@ -1,12 +1,9 @@
 <?php
-// HSI Setup Wizard Redirect
-if (!file_exists(__DIR__ . '/.env')) {
+// Consider installed if DB_HOST env var is set (Render) OR .env file exists
+$isInstalled = !empty(getenv('DB_HOST')) || file_exists(__DIR__ . '/.env');
+if (!$isInstalled) {
     header('Location: install.php');
     exit;
-}
-if (file_exists(__DIR__ . '/install.php')) {
-    http_response_code(403);
-    die('<div style="padding:40px;text-align:center;font-family:sans-serif;color:#1A2B4A;margin-top:100px;"><h2>Security Warning</h2><p>The installation was successful, but the <strong>install.php</strong> file still exists.</p><p>You must delete <strong>install.php</strong> from your server before you can view the website.</p></div>');
 }
 ?>
 <!DOCTYPE html>
