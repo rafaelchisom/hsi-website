@@ -10,8 +10,8 @@ try {
     if ($page === 'all') {
         // Return everything in one call
         $blocks = $db->query('SELECT page, block_key, value FROM content_blocks')->fetchAll();
-        $team   = $db->query('SELECT id, name, role, bio, photo_url, sort_order FROM team_members WHERE published=1 ORDER BY sort_order')->fetchAll();
-        $news   = $db->query('SELECT id, title, author, excerpt, image_url, category, created_at FROM news_articles WHERE published=1 ORDER BY sort_order, created_at DESC')->fetchAll();
+        $team   = $db->query('SELECT id, name, role, bio, photo_url, sort_order FROM team_members WHERE published=true ORDER BY sort_order')->fetchAll();
+        $news   = $db->query('SELECT id, title, author, excerpt, image_url, category, created_at FROM news_articles WHERE published=true ORDER BY sort_order, created_at DESC')->fetchAll();
 
         $content = [];
         foreach ($blocks as $row) {
@@ -20,7 +20,7 @@ try {
 
         jsonResponse(['success' => true, 'content' => $content, 'team' => $team, 'news' => $news]);
     } elseif ($page === 'team') {
-        $team = $db->query('SELECT id, name, role, bio, photo_url, sort_order FROM team_members WHERE published=1 ORDER BY sort_order')->fetchAll();
+        $team = $db->query('SELECT id, name, role, bio, photo_url, sort_order FROM team_members WHERE published=true ORDER BY sort_order')->fetchAll();
         $stmt = $db->prepare('SELECT block_key, value FROM content_blocks WHERE page = ?');
         $stmt->execute(['team']);
         $content = [];
@@ -28,7 +28,7 @@ try {
         jsonResponse(['success' => true, 'page' => 'team', 'team' => $team, 'content' => $content]);
 
     } elseif ($page === 'news') {
-        $news = $db->query('SELECT id, title, author, excerpt, body, image_url, category, created_at FROM news_articles WHERE published=1 ORDER BY sort_order, created_at DESC')->fetchAll();
+        $news = $db->query('SELECT id, title, author, excerpt, body, image_url, category, created_at FROM news_articles WHERE published=true ORDER BY sort_order, created_at DESC')->fetchAll();
         $stmt = $db->prepare('SELECT block_key, value FROM content_blocks WHERE page = ?');
         $stmt->execute(['news']);
         $content = [];
