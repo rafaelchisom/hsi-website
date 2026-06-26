@@ -1,0 +1,21 @@
+Options -Indexes
+RewriteEngine On
+
+# Block access to hidden files (.env, .git) and SQL backups
+<FilesMatch "^\.|\.sql$">
+    Require all denied
+</FilesMatch>
+
+# Skip API, admin, uploads — serve them as-is
+RewriteRule ^api(/|$)     - [L]
+RewriteRule ^admin(/|$)   - [L]
+RewriteRule ^uploads(/|$) - [L]
+
+# Serve any other real file that exists (like assets/ JS and CSS)
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+# Everything else routes to index.php (React router fallback)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [L]
