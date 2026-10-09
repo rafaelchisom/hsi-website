@@ -1,0 +1,12 @@
+CREATE TABLE team_tiers (
+  id SERIAL PRIMARY KEY,
+  tier_key VARCHAR(30) NOT NULL,
+  label VARCHAR(100) NULL,
+  title VARCHAR(150) NOT NULL,
+  intro TEXT NULL,
+  sort_order INTEGER NOT NULL DEFAULT 0,
+  created_at TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT uniq_tier_key UNIQUE (tier_key)
+);
+CREATE TRIGGER team_tiers_updated_at BEFORE UPDATE ON team_tiers FOR EACH ROW EXECUTE FUNCTION set_updated_at();

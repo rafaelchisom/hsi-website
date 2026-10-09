@@ -1,5 +1,5 @@
 .env
+api/.env
 .DS_Store
-uploads/.DS_Store
-api/.DS_Store
-*.sql.bak
+**/.DS_Store
+install.lock

@@ -1,0 +1,10 @@
+# Whitelist approach: this directory only ever contains files the upload
+# pipeline itself wrote, and it only ever writes .jpg/.jpeg/.png/.gif/.webp
+# (MediaController::ALLOWED_MIME). Deny everything by default, then grant
+# access back only to those extensions — safer than trying to blacklist every
+# possible executable extension variant (.php3-8, .phar, .phtml, .inc, .cgi...).
+Require all denied
+
+<FilesMatch "\.(jpe?g|png|gif|webp)$">
+    Require all granted
+</FilesMatch>

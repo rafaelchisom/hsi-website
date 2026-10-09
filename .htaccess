@@ -1,21 +1,47 @@
 Options -Indexes
 RewriteEngine On
+RewriteBase /
 
-# Block access to hidden files (.env, .git) and SQL backups
-<FilesMatch "^\.|\.sql$">
+# Real files and folders served as-is (api/ and db/ have their own .htaccess)
+RewriteRule ^api/ - [L]
+RewriteRule ^assets/ - [L]
+RewriteRule ^public/ - [L]
+RewriteRule ^db/ - [L]
+
+# SEO endpoints at their canonical root paths
+RewriteRule ^sitemap\.xml$ api/sitemap.xml [L]
+RewriteRule ^robots\.txt$ public/robots.txt [L]
+RewriteRule ^favicon\.svg$ public/favicon.svg [L]
+
+# Admin app (client-side routes fall back to its shell)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^admin/ admin/index.html [L]
+
+# Public site: seo.php serves the app shell with each page's title/description/
+# social tags filled in from the database (and a real 404 for unknown URLs)
+RewriteRule ^$ seo.php [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ seo.php [L]
+
+# Never serve hidden files (.env, .htaccess)
+<FilesMatch "^\.">
     Require all denied
 </FilesMatch>
 
-# Skip API, admin, uploads — serve them as-is
-RewriteRule ^api(/|$)     - [L]
-RewriteRule ^admin(/|$)   - [L]
-RewriteRule ^uploads(/|$) - [L]
-
-# Serve any other real file that exists (like assets/ JS and CSS)
-RewriteCond %{REQUEST_FILENAME} -f
-RewriteRule ^ - [L]
-
-# Everything else routes to index.php (React router fallback)
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^ index.php [L]
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/javascript application/json application/xml image/svg+xml
+</IfModule>
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+</IfModule>

@@ -1,0 +1,9 @@
+# Never serve configuration/secrets or dev leftovers.
+<FilesMatch "^\.env|\.(sql|log|md|example|bak)$">
+    Require all denied
+</FilesMatch>
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]

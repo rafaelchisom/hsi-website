@@ -1,36 +1,30 @@
-# ── HSI Website — PHP 8.2 + Apache on Render ─────────────────────────────────
+# ── DHAF website — PHP 8.2 + Apache on Render, database on Supabase ──────────
 FROM php:8.2-apache
 
-# Install PostgreSQL PDO driver + zip for uploads
-RUN apt-get update && apt-get install -y \
+# PostgreSQL driver, GD (image resizing for uploads), zip
+RUN apt-get update && apt-get install -y --no-install-recommends \
     libpq-dev \
+    libpng-dev \
+    libjpeg62-turbo-dev \
+    libwebp-dev \
     libzip-dev \
-    zip \
-    unzip \
-  && docker-php-ext-install \
-    pdo \
-    pdo_pgsql \
-    zip \
+  && docker-php-ext-configure gd --with-jpeg --with-webp \
+  && docker-php-ext-install pdo_pgsql gd zip \
   && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Enable Apache mod_rewrite (needed for .htaccess routing)
-RUN a2enmod rewrite
+# Production PHP settings, with room for photo uploads (the app downsizes them)
+RUN cp "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" \
+  && printf 'upload_max_filesize = 12M\npost_max_size = 14M\nexpose_php = Off\n' > "$PHP_INI_DIR/conf.d/dhaf.ini"
 
-# Allow .htaccess overrides in the web root
-RUN sed -i 's|AllowOverride None|AllowOverride All|g' /etc/apache2/apache2.conf
+# .htaccess routing, security headers, compression and caching
+RUN a2enmod rewrite headers deflate expires \
+  && sed -i 's|AllowOverride None|AllowOverride All|g' /etc/apache2/apache2.conf
 
-# Copy all site files into the web root
 COPY . /var/www/html/
+RUN mv /var/www/html/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh \
+  && chmod +x /usr/local/bin/docker-entrypoint.sh \
+  && mkdir -p /var/www/html/api/uploads \
+  && chown -R www-data:www-data /var/www/html
 
-# Fix permissions — Apache needs to read/write uploads/
-RUN chown -R www-data:www-data /var/www/html \
-  && chmod -R 755 /var/www/html \
-  && chmod -R 775 /var/www/html/uploads
-
-# Remove .DS_Store files (Mac artefacts)
-RUN find /var/www/html -name ".DS_Store" -delete
-
-# Expose port 80 (Render maps this automatically)
 EXPOSE 80
-
-CMD ["apache2-foreground"]
+ENTRYPOINT ["docker-entrypoint.sh"]

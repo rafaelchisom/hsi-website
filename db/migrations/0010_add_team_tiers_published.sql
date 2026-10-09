@@ -1,0 +1,2 @@
+ALTER TABLE team_tiers
+  ADD COLUMN is_published SMALLINT NOT NULL DEFAULT 1;
