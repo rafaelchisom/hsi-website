@@ -1,0 +1,94 @@
+/*
+ * Mobile fixes layered on top of the pre-built app stylesheet
+ * (public/assets/index-*.css), whose source isn't part of this repo.
+ * Loaded from public/index.html after the app CSS; bump the ?v= there
+ * when changing this file (assets are cached for a year).
+ */
+
+/* ── Mobile navigation (button + panel are added by mobile-nav.js) ───────── */
+.mnav-toggle { display: none; }
+
+@media (max-width: 900px) {
+  .nav-inner { position: relative; justify-content: flex-start; gap: 12px; width: 100%; }
+  .nav-inner > .btn { margin-left: auto; }
+
+  .mnav-toggle {
+    display: inline-flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px;
+    width: 44px; height: 44px; flex-shrink: 0; padding: 0; margin-left: -4px;
+    background: transparent; border: 0; border-radius: 12px; cursor: pointer;
+    color: var(--navy);
+  }
+  .nav-inner.nav-navy .mnav-toggle { color: #fff; }
+  .mnav-toggle span { display: block; width: 22px; height: 2px; border-radius: 2px; background: currentColor; transition: transform .2s, opacity .2s; }
+  nav.mnav-open .mnav-toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  nav.mnav-open .mnav-toggle span:nth-child(2) { opacity: 0; }
+  nav.mnav-open .mnav-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .mnav-toggle:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+  /* The desktop links become a drop-down panel under the nav bar */
+  nav.mnav-open .nav-links,
+  nav.mnav-open .nav-inner.nav-navy .nav-links {
+    display: flex; flex-direction: column; align-items: stretch; gap: 0;
+    position: absolute; top: calc(100% + 10px); left: 0; right: 0; z-index: 60;
+    max-height: calc(100vh - 120px); overflow-y: auto;
+    padding: 10px; border-radius: 20px;
+    background: var(--paper); color: var(--navy);
+    border: 1px solid #0b254514; box-shadow: 0 18px 40px #0b254530;
+    font-size: 1rem;
+  }
+  nav.mnav-open .nav-links > a { display: block; padding: 13px 14px; border-radius: 12px; color: var(--navy); }
+  nav.mnav-open .nav-links > a:hover,
+  nav.mnav-open .dd-menu a:hover { background: var(--teal-tint); color: var(--teal); }
+
+  /* Drop-down groups are shown expanded, with the group name as a label */
+  nav.mnav-open .dd { border-bottom: 1px solid #0b254512; padding-bottom: 6px; margin-bottom: 6px; }
+  nav.mnav-open .dd-btn,
+  nav.mnav-open .nav-inner.nav-navy .dd-btn {
+    display: block; padding: 10px 14px 4px; cursor: default;
+    font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--navy-soft);
+  }
+  nav.mnav-open .dd-btn .car { display: none; }
+  nav.mnav-open .dd-menu {
+    display: block; position: static; transform: none; min-width: 0;
+    padding: 0; border: 0; border-radius: 0; box-shadow: none; background: transparent;
+  }
+  nav.mnav-open .dd-menu:before { display: none; }
+  nav.mnav-open .dd-menu a { padding: 11px 14px; color: var(--navy); white-space: normal; }
+}
+
+@media (max-width: 420px) {
+  .nav-inner, .nav-inner.nav-navy { padding: 10px 12px 10px 16px; }
+  .nav-inner .btn { padding: 10px 18px; }
+}
+
+/* ── Page layout on phones ───────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  /* Big headings: keep long words like "Foundation:" on screen */
+  h1 { font-size: clamp(1.9rem, 8.6vw, 2.5rem); overflow-wrap: break-word; }
+
+  /* Less stacked padding inside the rounded bands (72px + 72px on desktop) */
+  section { padding: 48px 0; }
+  .band, .band-navy { margin: 0 12px; }
+  .band .wrap, .band-navy .wrap { padding-top: 28px; padding-bottom: 28px; padding-left: 20px; padding-right: 20px; }
+
+  /* Home "challenge" diagram: cards stack in a grid instead of overlapping */
+  .stage { aspect-ratio: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .stage .wires { display: none; }
+  .stage .prob { position: static; width: auto; min-height: 0; }
+  .stage .tl, .stage .tr { order: 1; }
+  .stage .core { order: 2; grid-column: 1 / -1; position: static; transform: none; width: auto; max-width: none; padding: 18px; }
+  .stage .bl, .stage .br { order: 3; }
+  .core .tagline { font-size: .95rem; }
+  .prob strong { font-size: .9rem; }
+  .prob small { font-size: .78rem; }
+
+  /* Footer newsletter form: the button wraps under the field instead of overflowing */
+  .nl-form { flex-wrap: wrap; max-width: 100%; }
+  .nl-form input { min-width: 0; flex: 1 1 180px; }
+  .nl-form .btn { flex: 1 0 auto; justify-content: center; }
+}
+
+/* NICU Network page: the SDG section sits outside the padded .wrap */
+@media (max-width: 1060px) {
+  .sdg-block { padding-left: 24px; padding-right: 24px; }
+}
