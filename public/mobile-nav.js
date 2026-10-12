@@ -1,11 +1,40 @@
 /*
- * Mobile menu for the pre-built public app, which hides its nav links below
- * 900px without offering a menu button. Adds a hamburger button to the nav
- * bar that opens the existing links as a panel (styled in mobile.css), so
- * the app's own router links keep working. Re-attaches itself if the app
- * re-renders the nav.
+ * Fixes layered on the pre-built public app (its source isn't in this repo):
+ *  - Mobile menu: the app hides its nav links below 900px without offering a
+ *    menu button. Adds a hamburger button that opens the existing links as a
+ *    panel (styled in mobile.css), so the app's own router links keep working.
+ *  - Scroll to top on page change: the app keeps the old scroll position, so a
+ *    footer link opened the next page near the bottom.
+ *  - Tags the app's plain "Loading…" placeholder so mobile.css can replace it
+ *    with a quiet, delayed spinner.
+ * Re-applies itself whenever the app re-renders.
  */
 (function () {
+  var pushState = history.pushState;
+  history.pushState = function () {
+    var before = location.pathname;
+    var result = pushState.apply(this, arguments);
+    if (location.pathname !== before && !location.hash) {
+      // React restores the scroll position around the focused element (the
+      // tapped link) after it swaps the page, dragging the new page down to
+      // where the old link was. Nothing focused, nothing to restore.
+      if (document.activeElement && document.activeElement !== document.body) document.activeElement.blur();
+      // The app sets html { scroll-behavior: smooth }, which would turn this
+      // into a slow glide that the incoming page's content pushes back down.
+      // The browser applies that when it performs the scroll (a frame later),
+      // so ask for 'instant' and keep the override until it has happened.
+      var root = document.documentElement;
+      root.style.scrollBehavior = 'auto';
+      try {
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      } catch (e) {
+        window.scrollTo(0, 0);
+      }
+      setTimeout(function () { root.style.scrollBehavior = ''; }, 100);
+    }
+    return result;
+  };
+
   function closeMenu(nav) {
     nav.classList.remove('mnav-open');
     var btn = nav.querySelector('.mnav-toggle');
@@ -15,7 +44,15 @@
     }
   }
 
+  function tagLoading() {
+    var els = document.querySelectorAll('#root .wrap');
+    for (var i = 0; i < els.length; i++) {
+      if (els[i].textContent.trim() === 'Loading\u2026') els[i].classList.add('page-loading');
+    }
+  }
+
   function setup() {
+    tagLoading();
     var nav = document.querySelector('nav');
     var inner = nav && nav.querySelector('.nav-inner');
     var links = inner && inner.querySelector('.nav-links');

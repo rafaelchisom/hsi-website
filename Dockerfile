@@ -20,6 +20,13 @@ RUN cp "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" \
 RUN a2enmod rewrite headers deflate expires \
   && sed -i 's|AllowOverride None|AllowOverride All|g' /etc/apache2/apache2.conf
 
+# Each Apache worker keeps one persistent database connection (see
+# api/lib/Database.php), so cap the workers: this bounds the connections to the
+# Supabase pooler (shared with other apps) and memory on Render's instance.
+RUN printf '<IfModule mpm_prefork_module>\n  StartServers 4\n  MinSpareServers 4\n  MaxSpareServers 10\n  MaxRequestWorkers 25\n  MaxConnectionsPerChild 2000\n</IfModule>\nKeepAliveTimeout 2\n' \
+    > /etc/apache2/conf-available/dhaf-workers.conf \
+  && a2enconf dhaf-workers
+
 COPY . /var/www/html/
 RUN mv /var/www/html/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh \
   && chmod +x /usr/local/bin/docker-entrypoint.sh \

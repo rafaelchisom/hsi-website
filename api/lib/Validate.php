@@ -25,6 +25,16 @@ class Validate
         if (!is_array($data)) {
             Response::error('Invalid JSON body', 400);
         }
+        // The flag columns are SMALLINT 0/1 (MySQL TINYINT(1) originally). The
+        // admin sends JSON true/false for is_active, is_published, is_featured;
+        // MySQL accepted those, but PDO binds false as '' which PostgreSQL
+        // rejects. Only top-level values: nested ones (e.g. a page section's
+        // data_json) are stored as JSON and must keep their real booleans.
+        foreach ($data as $key => $value) {
+            if (is_bool($value)) {
+                $data[$key] = $value ? 1 : 0;
+            }
+        }
         return $data;
     }
 }

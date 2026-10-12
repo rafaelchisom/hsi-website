@@ -4,6 +4,12 @@
  * PostgreSQL (Supabase) connection. Emulated prepares keep every statement a
  * single round trip with no server-side prepared statements, which is what
  * Supabase's transaction pooler (port 6543) requires.
+ *
+ * Web requests reuse a persistent connection per Apache worker: opening a new
+ * TLS connection to the pooler costs several network round trips (about a
+ * second between Render and Supabase), which made every API call slow. The
+ * web code never leaves a transaction open, so reusing connections is safe;
+ * the Dockerfile caps Apache workers to bound the number of connections.
  */
 class Database
 {
@@ -25,7 +31,7 @@ class Database
                     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                     PDO::ATTR_EMULATE_PREPARES => true,
-                    PDO::ATTR_STATEMENT_CLASS => [DatabaseStatement::class, []],
+                    PDO::ATTR_PERSISTENT => PHP_SAPI !== 'cli',
                 ]
             );
         }
@@ -33,27 +39,3 @@ class Database
     }
 }
 
-/**
- * The flag columns are SMALLINT 0/1 (MySQL TINYINT(1) in the original schema).
- * MySQL silently accepted PHP booleans bound for them — the admin sends JSON
- * true/false for is_active, is_published, is_featured — but PDO binds false as
- * '' which PostgreSQL rejects, so booleans are bound as 1/0 here instead.
- */
-class DatabaseStatement extends PDOStatement
-{
-    protected function __construct()
-    {
-    }
-
-    public function execute(?array $params = null): bool
-    {
-        if ($params !== null) {
-            foreach ($params as $key => $value) {
-                if (is_bool($value)) {
-                    $params[$key] = $value ? 1 : 0;
-                }
-            }
-        }
-        return parent::execute($params);
-    }
-}
